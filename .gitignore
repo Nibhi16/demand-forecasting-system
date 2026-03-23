@@ -1,0 +1,11 @@
+# Ignore data files
+data/
+
+# Ignore trained models
+ml/model.pkl
+
+# Ignore virtual environment
+venv/
+
+# Ignore Python cache
+__pycache__/
