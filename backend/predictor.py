@@ -11,13 +11,11 @@ logger = logging.getLogger("demand_forecasting_api")
 
 
 def build_model_input_frame(
-    input_frame: pd.DataFrame, model_feature_names: Sequence[str] | None
+    input_frame: pd.DataFrame,
+    model_feature_names: Sequence[str] | None,
 ) -> pd.DataFrame:
     """
-    Align the request input with the model's expected feature columns.
-
-    If the model expects additional columns not present in the API request,
-    they are filled with 0.0 to keep prediction running.
+    Align input data with model's expected feature columns.
     """
 
     if model_feature_names is None:
@@ -25,11 +23,12 @@ def build_model_input_frame(
 
     aligned = input_frame.copy()
 
+    # Add missing features
     for feature in model_feature_names:
         if feature not in aligned.columns:
             aligned[feature] = 0.0
 
-    # Ensure correct column order
+    # Ensure correct order
     return aligned[list(model_feature_names)]
 
 
@@ -39,22 +38,22 @@ def predict_with_allocation(
     input_rows: Sequence[dict],
 ) -> list[dict]:
     """
-    Predict demand and compute allocation decisions using adaptive logic.
+    Predict demand using trained model and apply allocation logic.
     """
 
     # Convert input to DataFrame
     input_frame = pd.DataFrame(list(input_rows))
 
-    # Align with model features
+    # Align features
     model_input = build_model_input_frame(input_frame, model_feature_names)
 
-    # Make predictions
+    # Predict
     preds = model.predict(model_input)
 
-    # Convert predictions to float list
+    # Convert to float list
     pred_list = [float(p) for p in preds]
 
-    # 🧠 Compute dynamic average demand
+    # Compute dynamic average
     avg_demand = sum(pred_list) / len(pred_list)
 
     outputs: list[dict] = []
@@ -70,7 +69,7 @@ def predict_with_allocation(
         )
 
     logger.info(
-        "Predictions generated for batch_size=%s | avg_demand=%.2f",
+        "📊 Predictions generated | batch_size=%s | avg_demand=%.2f",
         len(outputs),
         avg_demand,
     )
