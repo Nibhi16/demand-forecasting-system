@@ -5,4 +5,7 @@ joblib
 scikit-learn
 pydantic
 numpy
+streamlit
+requests
+plotly
 
