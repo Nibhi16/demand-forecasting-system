@@ -7,7 +7,7 @@ import streamlit as st
 from utils import now_time_str
 
 
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = "https://demand-api-bsbz.onrender.com"
 DEFAULT_HISTORY_COLUMNS = [
     "timestamp",
     "week",
