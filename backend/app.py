@@ -14,7 +14,7 @@ from .predictor import predict_with_allocation
 from .schemas import PredictInput, PredictResponse
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MODEL_PATH = PROJECT_ROOT / "ml" / "model.pkl"
+MODEL_PATH = PROJECT_ROOT / "ml" / "best_model.pkl"
 
 
 def _configure_logging() -> None:

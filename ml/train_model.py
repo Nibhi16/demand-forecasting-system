@@ -14,6 +14,6 @@ model = RandomForestRegressor(n_estimators=50)
 model.fit(X, y)
 
 # Save model
-joblib.dump(model, "ml/model.pkl")
+joblib.dump(model, "ml/best_model.pkl")
 
 print("✅ Model trained successfully!")
